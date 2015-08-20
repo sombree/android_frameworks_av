@@ -132,6 +132,8 @@ include $(CLEAR_VARS)
 LOCAL_CFLAGS += -DANDROID_SMP=$(if $(findstring true,$(TARGET_CPU_SMP)),1,0)
 LOCAL_SRC_FILES += SingleStateQueue.cpp
 LOCAL_CFLAGS += -DSINGLE_STATE_QUEUE_INSTANTIATIONS='"SingleStateQueueInstantiations.cpp"'
+LOCAL_CFLAGS += -Os
+LOCAL_CPPFLAGS += -Os
 
 LOCAL_MODULE := libinstantssq
 LOCAL_MODULE_TAGS := optional

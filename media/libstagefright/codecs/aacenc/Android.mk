@@ -84,6 +84,8 @@ endif
 
 LOCAL_CFLAGS += -Werror
 
+LOCAL_CFLAGS := -Os
+
 include $(BUILD_STATIC_LIBRARY)
 
 ################################################################################
@@ -106,7 +108,7 @@ ifeq ($(AAC_LIBRARY), fraunhofer)
           external/aac/libSBRenc/include \
           external/aac/libSYS/include
 
-  LOCAL_CFLAGS :=
+  LOCAL_CFLAGS := -Os
 
   LOCAL_CFLAGS += -Werror
 

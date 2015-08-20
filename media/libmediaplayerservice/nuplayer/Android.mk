@@ -32,6 +32,9 @@ LOCAL_CFLAGS += -DENABLE_AV_ENHANCEMENTS
 endif
 endif
 
+LOCAL_CFLAGS += -Os
+LOCAL_CPPFLAGS += -Os
+
 LOCAL_MODULE:= libstagefright_nuplayer
 
 LOCAL_MODULE_TAGS := eng

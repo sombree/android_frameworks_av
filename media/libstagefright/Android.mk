@@ -260,6 +260,9 @@ ifeq ($(BOARD_USE_SEIREN_AUDIO), true)
 LOCAL_CFLAGS += -DUSE_SEIREN_AUDIO
 endif
 
+LOCAL_CFLAGS += -Os
+LOCAL_CPPFLAGS += -Os
+
 LOCAL_MODULE:= libstagefright
 
 LOCAL_MODULE_TAGS := optional

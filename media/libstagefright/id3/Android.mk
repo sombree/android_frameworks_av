@@ -17,7 +17,7 @@ include $(CLEAR_VARS)
 LOCAL_SRC_FILES := \
 	testid3.cpp
 
-LOCAL_CFLAGS += -Werror
+LOCAL_CFLAGS += -Os -Werror
 
 LOCAL_SHARED_LIBRARIES := \
 	libstagefright libutils liblog libbinder libstagefright_foundation
