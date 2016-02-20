@@ -144,6 +144,7 @@ public:
     void nextEvent();
     int nextChannelID() { return mNextEvent.channelID(); }
     void dump();
+    int getPrevSampleID(void) { return mPrevSampleID; }
 
 private:
     static void callback(int event, void* user, void *info);
@@ -160,6 +161,7 @@ private:
     int                 mAudioBufferSize;
     unsigned long       mToggle;
     bool                mAutoPaused;
+    int                 mPrevSampleID;
 };
 
 // application object for managing a pool of sounds
@@ -187,6 +189,7 @@ public:
 
     // called from SoundPoolThread
     void sampleLoaded(int sampleID);
+    sp<Sample> findSample(int sampleID);
 
     // called from AudioTrack thread
     void done_l(SoundChannel* channel);
@@ -198,11 +201,10 @@ public:
 private:
     SoundPool() {} // no default constructor
     bool startThreads();
-    void doLoad(sp<Sample>& sample);
-    sp<Sample> findSample(int sampleID) { return mSamples.valueFor(sampleID); }
+    sp<Sample> findSample_l(int sampleID);
     SoundChannel* findChannel (int channelID);
     SoundChannel* findNextChannel (int channelID);
-    SoundChannel* allocateChannel_l(int priority);
+    SoundChannel* allocateChannel_l(int priority, int sampleID);
     void moveToFront_l(SoundChannel* channel);
     void notify(SoundPoolEvent event);
     void dump();

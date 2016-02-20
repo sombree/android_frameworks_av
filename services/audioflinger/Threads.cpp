@@ -5289,10 +5289,13 @@ void AudioFlinger::DuplicatingThread::removeOutputTrack(MixerThread *thread)
             mOutputTracks[i]->destroy();
             mOutputTracks.removeAt(i);
             updateWaitTime_l();
+            if (thread->getOutput() == mOutput) {
+                mOutput = NULL;
+            }
             return;
         }
     }
-    ALOGV("removeOutputTrack(): unkonwn thread: %p", thread);
+    ALOGV("removeOutputTrack(): unknown thread: %p", thread);
 }
 
 // caller must hold mLock
@@ -6679,7 +6682,9 @@ void AudioFlinger::RecordThread::readInputParameters_l()
     // The current value is higher than necessary.  However it should not add to latency.
 
     // Over-allocate beyond mRsmpInFramesP2 to permit a HAL read past end of buffer
-    mRsmpInBuffer = new int16_t[(mRsmpInFramesP2 + mFrameCount - 1) * mChannelCount];
+    size_t bufferSizeInShorts = (mRsmpInFramesP2 + mFrameCount - 1) * mChannelCount;
+    mRsmpInBuffer = new int16_t[bufferSizeInShorts];
+    memset(mRsmpInBuffer, 0, bufferSizeInShorts * sizeof(mRsmpInBuffer[0]));
 
     // AudioRecord mSampleRate and mChannelCount are constant due to AudioRecord API constraints.
     // But if thread's mSampleRate or mChannelCount changes, how will that affect active tracks?
